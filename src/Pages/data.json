@@ -1,0 +1,92 @@
+[
+    {
+        "ProductID": 10248, 
+        "ProductName": "Lenovo ThinkPad", 
+        "Price": 600000,
+        "Quantity": 20
+    },
+    {
+        "ProductID": 10249, 
+        "ProductName": "HP ElitePro", 
+        "Price": 750000,
+        "Quantity": 10
+    },
+    {
+        "ProductID": 10250, 
+        "ProductName": "Dell Latitude", 
+        "Price": 580000,
+        "Quantity": 35
+    },
+    {
+        "ProductID": 10251, 
+        "ProductName": "Google ChromeBook", 
+        "Price": 450000,
+        "Quantity": 50
+    },
+    {
+        "ProductID": 10252, 
+        "ProductName": "Toshiba", 
+        "Price": 690000,
+        "Quantity": 5
+    },
+    {
+        "ProductID": 10253, 
+        "ProductName": "Oriamo Earpods", 
+        "Price": 35000,
+        "Quantity": 50
+    },
+    {
+        "ProductID": 10254, 
+        "ProductName": "Oriamo Charger", 
+        "Price": 18000,
+        "Quantity": 20
+    },
+    {
+        "ProductID": 10255, 
+        "ProductName": "Oriamo Clipper", 
+        "Price": 25000,
+        "Quantity": 10
+    },
+    {
+        "ProductID": 10256, 
+        "ProductName": "Oriamo Cables", 
+        "Price": 2500,
+        "Quantity": 80
+    },
+    {
+        "ProductID": 10257, 
+        "ProductName": "LG 24 Inch Monitor", 
+        "Price": 110000,
+        "Quantity": 5
+    },
+    {
+        "ProductID": 10258, 
+        "ProductName": "Panasonic 24 Inch Monitor", 
+        "Price": 125000,
+        "Quantity": 4
+    },
+    {
+        "ProductID": 10259, 
+        "ProductName": "Hisense 24 Inch Monitor", 
+        "Price": 95000,
+        "Quantity": 6
+    },
+    {
+        "ProductID": 10260, 
+        "ProductName": "Sony wireless Mouse", 
+        "Price": 4500,
+        "Quantity": 200
+    },
+    {
+        "ProductID": 10261, 
+        "ProductName": "Laptop Bag", 
+        "Price": 10000,
+        "Quantity": 50
+    },
+    {
+        "ProductID": 10262, 
+        "ProductName": "Laptop Stand", 
+        "Price": 6000,
+        "Quantity": 20
+    }
+]
