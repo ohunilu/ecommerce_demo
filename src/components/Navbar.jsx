@@ -4,7 +4,7 @@ export default function Navbar() {
 
     return (
         <Flex as="nav" p="10px" alignItems="Center">
-            <Heading as="h3"> Ecommerce Demo </Heading>
+            <Heading as="h3"> Demo </Heading>
             <Spacer />
 
             <HStack spacing="10px">

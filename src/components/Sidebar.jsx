@@ -1,32 +1,55 @@
-import { AttachmentIcon, CalendarIcon, LockIcon, RepeatIcon } from '@chakra-ui/icons'
-import { List, ListIcon, ListItem } from '@chakra-ui/react'
+import { AttachmentIcon, CalendarIcon, LockIcon, RepeatIcon, SettingsIcon, Divider } from '@chakra-ui/icons'
+import { List, ListIcon, ListItem, Flex, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 
 export default function Sidebar() {
   return (
     <List color="white" fontSize="1.3em" spacing={6}>
         <ListItem>
+        <Text fontSize="2xl" fontWeight="bold">E-commerce</Text>
+        </ListItem>
+        <ListItem>
             <NavLink to="/">
-             <ListIcon as={CalendarIcon} color="white" />
-            Dashboard
+            <Flex alignItems="center">
+                <ListIcon as={CalendarIcon} color="white" fontSize="sm" />
+                <Text fontSize="sm" fontWeight="semibold">Dashboard</Text>
+            </Flex>
             </NavLink>
         </ListItem>
+        <Divider borderColor={"white"} borderWidth={"1px"} />
         <ListItem>
             <NavLink to="/order">
-            <ListIcon as={AttachmentIcon} color="white" />
-            Order
+            <Flex alignItems="center">
+                <ListIcon as={AttachmentIcon} color="white" fontSize="sm"/>
+                <Text fontSize="sm" fontWeight="semibold">Order</Text>
+            </Flex>
             </NavLink>
         </ListItem>
+        <Divider borderColor={"white"} borderWidth={"1px"} />
         <ListItem>
             <NavLink to="/product">
-            <ListIcon as={RepeatIcon} color="white" />
-            Product
+            <Flex alignItems="center">
+                <ListIcon as={RepeatIcon} color="white" fontSize="sm"/>
+                <Text fontSize="sm" fontWeight="semibold">Product</Text>
+            </Flex>
             </NavLink>
         </ListItem>
+        <Divider borderColor={"white"} borderWidth={"1px"} />
         <ListItem>
             <NavLink to="/user">
-            <ListIcon as={LockIcon} color="white" />
-            Users
+            <Flex alignItems="center">
+                <ListIcon as={LockIcon} color="white" fontSize="sm"/>
+                <Text fontSize="sm" fontWeight="semibold">Users</Text>
+            </Flex>
+            </NavLink>
+        </ListItem>
+        <Divider borderColor={"white"} borderWidth={"1px"} />
+        <ListItem>
+            <NavLink to="/setting">
+            <Flex alignItems="center">
+                <ListIcon as={SettingsIcon} color="white" fontSize="sm"/>
+                <Text fontSize="sm" fontWeight="semibold">Settings</Text>
+            </Flex>           
             </NavLink>
         </ListItem>
     </List>

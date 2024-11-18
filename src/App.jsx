@@ -10,6 +10,7 @@ import Order from './Pages/Order';
 import Product from './Pages/Product';
 import Dashboard from './Pages/Dashboard';
 import User from './Pages/User';
+import Setting from './Pages/Setting';
 
 // router and routes
 const router = createBrowserRouter(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path="order" element={<Order />} />
       <Route path="product" element={<Product />} />
       <Route path="user" element={<User />} />
+      <Route path="setting" element={<Setting />} />
     </Route>
   )
 )
