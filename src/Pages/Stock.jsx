@@ -15,23 +15,23 @@ import {
 } from '@chakra-ui/react';
 
 
-export default function User() {
-  const [users, setUsers] = useState([]);
+export default function Stock() {
+  const [stockLevels, setStockLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
+  const stockLevelsPerPage = 10;
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchStockLevels = async () => {
       try {
-        const response = await fetch('http://localhost:5002/users');
+        const response = await fetch('http://localhost:5000/stock-levels');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         console.log('Received data:', data);
-        setUsers(data);
+        setStockLevels(data);
       } catch (error) {
         console.error('Fetch error:', error);
         setError(error.message);
@@ -40,14 +40,14 @@ export default function User() {
       }
     };
 
-    fetchUsers();
+    fetchStockLevels();
   }, []);
 
-  const currentUsers = users.slice(
-    (currentPage - 1) * usersPerPage,
-    currentPage * usersPerPage
+  const currentStockLevels = stockLevels.slice(
+    (currentPage - 1) * stockLevelsPerPage,
+    currentPage * stockLevelsPerPage
   );
-  const totalPages = Math.ceil(users.length / usersPerPage);
+  const totalPages = Math.ceil(stockLevels.length / stockLevelsPerPage);
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -61,24 +61,34 @@ export default function User() {
       >
         <Thead bgColor="blue.700">
           <Tr>
-            <Th color="white">Email</Th>
-            <Th color="white">User Name</Th>
-            <Th color="white">Role</Th>
+            <Th color="white">Inventory ID</Th>
+            <Th color="white">Product Name</Th>
+            <Th color="white">Purchase Date</Th>
+            <Th color="white">Quantity Purchased</Th>
+            <Th color="white">Quantity Sold</Th>
+            <Th color="white">Outstanding Stock</Th>
+            <Th color="white">Supplier Name</Th>
+            <Th color="white">Reorder Level</Th>
           </Tr>
         </Thead>
         <Tbody>
           {loading ? (
             <Tr>
-              <Td colSpan={3}>
+              <Td colSpan={8}>
                 <SkeletonText />
               </Td>
             </Tr>
           ) : (
-            currentUsers.map((user) => (
-              <Tr key={user.email}>
-                <Td>{user.email}</Td>
-                <Td>{user.user_name}</Td>
-                <Td>{user.role.role_name}</Td>
+            currentStockLevels.map((stockLevel) => (
+              <Tr key={stockLevel.inventory_id}>
+                <Td>{stockLevel.inventory_id}</Td>
+                <Td>{stockLevel.products.product_name}</Td>
+                <Td>{stockLevel.purchase_date}</Td>
+                <Td>{stockLevel.quantity_purchased}</Td>
+                <Td>{stockLevel.quantity_sold}</Td>
+                <Td>{stockLevel.outstanding_stock}</Td>
+                <Td>{stockLevel.supplier.supplier_name}</Td>
+                <Td>{stockLevel.reorder_level}</Td>
               </Tr>
             ))
           )}

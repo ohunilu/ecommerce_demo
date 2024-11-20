@@ -11,6 +11,7 @@ import Product from './Pages/Product';
 import Dashboard from './Pages/Dashboard';
 import User from './Pages/User';
 import Setting from './Pages/Setting';
+import Stock from './Pages/Stock';
 
 // router and routes
 const router = createBrowserRouter(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route index element={<Dashboard />} />
       <Route path="order" element={<Order />} />
       <Route path="product" element={<Product />} />
+      <Route path="stock" element={<Stock />} />
       <Route path="user" element={<User />} />
       <Route path="setting" element={<Setting />} />
     </Route>

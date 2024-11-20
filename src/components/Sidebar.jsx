@@ -36,6 +36,15 @@ export default function Sidebar() {
         </ListItem>
         <Divider borderColor={"white"} borderWidth={"1px"} />
         <ListItem>
+            <NavLink to="/stock">
+            <Flex alignItems="center">
+                <ListIcon as={LockIcon} color="white" fontSize="sm"/>
+                <Text fontSize="sm" fontWeight="semibold">Stocks</Text>
+            </Flex>
+            </NavLink>
+        </ListItem>
+        <Divider borderColor={"white"} borderWidth={"1px"} />
+        <ListItem>
             <NavLink to="/user">
             <Flex alignItems="center">
                 <ListIcon as={LockIcon} color="white" fontSize="sm"/>

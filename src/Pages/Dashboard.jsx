@@ -1,70 +1,144 @@
-import { Card, CardBody, CardHeader, Flex, SimpleGrid, Text} from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  SimpleGrid,
+  Text
+} from "@chakra-ui/react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell
+} from "recharts";
+import { useState, useEffect } from 'react';
 
-export default function Dashboard () {
+export default function Dashboard() {
+  const [data, setData] = useState({
+    totalRevenue: 0,
+    grossProfit: 0,
+    averageOrderValue: 0,
+    inventoryTurnover: [],
+    salesPerUser: [],
+    topSellingProducts: [],
+    productCategorySales: []
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:5003/analytics')
+      .then(response => response.json())
+      .then(data => setData(data));
+  }, []);
 
   return (
-<Flex direction="column">
-  <SimpleGrid spacing={15} minChildWidth="250px"> 
-    <Card borderTop={"8px"} borderColor={"blue.600"}>
-    <CardHeader>
-        <Text fontSize="sm">Total Sales</Text>
-      </CardHeader>
-      <CardBody>
-        <Text fontSize="4xl" fontWeight="bold">₦ 2,500,000.00</Text> 
-        </CardBody>
-    </Card>
-    <Card borderTop={"8px"} borderColor={"blue.600"}>
-      <CardHeader>
-      <Text fontSize="sm">Monthly Average Order Value</Text>
-      </CardHeader>
-      <CardBody>
-      <Text fontSize="4xl" fontWeight="bold">₦ 55,000.00</Text>
-      </CardBody>
-    </Card>
-    <Card borderTop={"8px"} borderColor={"blue.600"}>
-      <CardHeader>
-      <Text fontSize="sm">Monthly Gross Profit</Text>
-      </CardHeader>
-      <CardBody>
-      <Text fontSize="4xl" fontWeight="bold">₦ 60,000.00</Text>
-      </CardBody>
-    </Card>
-  </SimpleGrid>
+    <Flex direction="column">
+      <SimpleGrid spacing={15} minChildWidth="250px">
+        <Card borderTop={"8px"} borderColor={"blue.600"}>
+          <CardHeader>
+            <Text fontSize="sm">Total Revenue</Text>
+          </CardHeader>
+          <CardBody>
+            <Text fontSize="4xl" fontWeight="bold">₦ {data.totalRevenue}</Text>
+          </CardBody>
+        </Card>
+        <Card borderTop={"8px"} borderColor={"blue.600"}>
+          <CardHeader>
+            <Text fontSize="sm">Gross Profit</Text>
+          </CardHeader>
+          <CardBody>
+            <Text fontSize="4xl" fontWeight="bold">₦ {data.grossProfit}</Text>
+          </CardBody>
+        </Card>
+        <Card borderTop={"8px"} borderColor={"blue.600"}>
+          <CardHeader>
+            <Text fontSize="sm">Average Order Value</Text>
+          </CardHeader>
+          <CardBody>
+            <Text fontSize="4xl" fontWeight="bold">₦ {data.averageOrderValue}</Text>
+          </CardBody>
+        </Card>
+      </SimpleGrid>
 
-  <SimpleGrid spacing={15} minChildWidth="500px" mt={8}>
-<Card height="300px">
-    <CardHeader>
-        <Text fontSize="sm">Inventory Turnover</Text>
-      </CardHeader>
-      <CardBody>
-        <Text fontSize="4xl" fontWeight="bold">Line Chart</Text> 
-        </CardBody>
-    </Card>
-    <Card height="300px">
-      <CardHeader>
-      <Text fontSize="sm">Sales per Cashier</Text>
-      </CardHeader>
-      <CardBody>
-      <Text fontSize="4xl" fontWeight="bold">Bar Chart</Text>
-      </CardBody>
-    </Card>
-    <Card height="300px">
-      <CardHeader>
-      <Text fontSize="sm">Top 10 selling Products</Text>
-      </CardHeader>
-      <CardBody>
-      <Text fontSize="4xl" fontWeight="bold">Bar Chart</Text>
-      </CardBody>
-    </Card>
-    <Card height="300px">
-      <CardHeader>
-      <Text fontSize="sm">Percentage of Each Product in Total Monthly Sales</Text>
-      </CardHeader>
-      <CardBody>
-      <Text fontSize="4xl" fontWeight="bold">Pie Chart</Text>
-      </CardBody>
-    </Card>
-  </SimpleGrid>
-</Flex>
+      <SimpleGrid spacing={15} minChildWidth="500px" mt={8}>
+        <Card height="300px">
+          <CardHeader>
+            <Text fontSize="sm">Inventory Turnover</Text>
+          </CardHeader>
+          <CardBody>
+            <LineChart width={500} height={250} data={data.inventoryTurnover}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="turnover" stroke="#8884d8" />
+            </LineChart>
+          </CardBody>
+        </Card>
+        <Card height="300px">
+          <CardHeader>
+            <Text fontSize="sm">Sales per User</Text>
+          </CardHeader>
+          <CardBody>
+            <BarChart width={500} height={250} data={data.salesPerUser}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="email" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_sales" fill="#8884d8" />
+            </BarChart>
+          </CardBody>
+        </Card>
+        <Card height="300px">
+          <CardHeader>
+            <Text fontSize="sm">Top 10 Selling Products</Text>
+          </CardHeader>
+          <CardBody>
+            <BarChart width={500} height={250} data={data.topSellingProducts}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="product_name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="quantity_sold" fill="#8884d8" />
+            </BarChart>
+          </CardBody>
+        </Card>
+        <Card height="300px">
+          <CardHeader>
+            <Text fontSize="sm">Percentage of Each Product Category</Text>
+          </CardHeader>
+          <CardBody>
+            <PieChart width={500} height={250}>
+              <Pie
+                dataKey="category_sales"
+                isAnimationActive={false}
+                data={data.productCategorySales}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              >
+                {data.productCategorySales.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill="#8884d8" />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </CardBody>
+        </Card>
+      </SimpleGrid>
+    </Flex>
   );
 };
