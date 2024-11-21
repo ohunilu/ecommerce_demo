@@ -27,7 +27,7 @@ CREATE TABLE products (
   cost_price DECIMAL(10, 2),
   sales_price DECIMAL(10, 2),
   description TEXT,
-  product_image VARCHAR(255),
+  product_image BLOB,
   FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 

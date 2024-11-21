@@ -3,34 +3,52 @@ import {
   useEffect
 } from 'react';
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
+  Card,
+  CardBody,
+  CardFooter,
+  Heading,
+  Image,
+  Text,
+  Button,
   Box,
   SkeletonText,
-  Button
+  SimpleGrid,
+  Stack,
+  Divider
 } from '@chakra-ui/react';
 
+function b64toBlob(b64Data, contentType) {
+  const byteString = atob(b64Data);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const blob = new Blob([ab], { type: contentType });
+  return blob;
+}
+
+function createImageBlob(base64String) {
+  if (!base64String) {
+    return 'default-image.jpg'; // Default image URL
+  }
+  const imageBlob = b64toBlob(base64String, 'image/jpeg');
+  const imageSrc = URL.createObjectURL(imageBlob);
+  return imageSrc;
+}
 
 export default function Product() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10;
+  const productsPerPage = 12;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('http://localhost:5000/products');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
-        console.log('Received data:', data);
         setProducts(data);
       } catch (error) {
         console.error('Fetch error:', error);
@@ -52,42 +70,44 @@ export default function Product() {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <Box overflow="auto" maxWidth="100%" width="100%">
-      <Table
-        variant="simple"
-        border="2px"
-        borderColor="blue.700"
-        borderCollapse="collapse"
-      >
-        <Thead bgColor="blue.700">
-          <Tr>
-            <Th color="white">Product ID</Th>
-            <Th color="white">Product Name</Th>
-            <Th color="white">Cost Price</Th>
-            <Th color="white">Sales Price</Th>
-            <Th color="white">Category</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {loading ? (
-            <Tr>
-              <Td colSpan={5}>
-                <SkeletonText />
-              </Td>
-            </Tr>
-          ) : (
-            currentProducts.map((product) => (
-              <Tr key={product.product_id}>
-                <Td>{product.product_id}</Td>
-                <Td>{product.product_name}</Td>
-                <Td>{product.cost_price}</Td>
-                <Td>{product.sales_price}</Td>
-                <Td>{product.category}</Td>
-              </Tr>
-            ))
-          )}
-        </Tbody>
-      </Table>
+    <Box maxWidth="100%" width="100%">
+      {loading ? (
+        <SimpleGrid columns={3} spacing={4}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((_, index) => (
+            <Card key={index} maxW="sm">
+              <SkeletonText height="200px" />
+              <CardBody>
+                <SkeletonText mt="4" />
+                <SkeletonText mt="4" />
+                <SkeletonText mt="4" />
+              </CardBody>
+            </Card>
+          ))}
+        </SimpleGrid>
+      ) : (
+        <SimpleGrid columns={3} spacing={4}>
+          {currentProducts.map((product) => (
+            <Card key={product.product_id} maxW="sm">
+              <Image src={createImageBlob(product.product_image)} />
+              <CardBody>
+              <Stack mt='6' spacing='3'>
+                <Heading size="md">{product.product_name}</Heading>
+                <Text>
+                  {product.description}
+                </Text>
+                <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
+                  ₦ {product.sales_price}
+                </Text>
+                </Stack>
+              </CardBody>
+              <Divider />
+              <CardFooter>
+                <Button variant="ghost" colorScheme='blue'>Add to cart</Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </SimpleGrid>
+      )}
       <div
         display="flex"
         justifyContent="center"

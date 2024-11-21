@@ -2,10 +2,10 @@ import os
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from base64 import b64encode
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
-# Retrieve database path from the environment variable
 database_path = os.getenv("DATABASE_PATH", "/app/Database/ecommerce.db")
 print(f"Database Path: {database_path}")  # Debugging the database path
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{database_path}"
@@ -13,7 +13,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-# Database models
 class categories(db.Model):
     category_id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(255), nullable=False)
@@ -46,9 +45,14 @@ class products(db.Model):
     cost_price = db.Column(db.Float, nullable=False)
     sales_price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    product_image = db.Column(db.String(255), nullable=False)
+    product_image = db.Column(db.BLOB)
 
     def to_dict(self):
+        image_data = self.product_image
+        if image_data:
+            image_data = b64encode(image_data).decode('utf-8')
+        else:
+            image_data = None
         return {
             "product_id": self.product_id,
             "product_name": self.product_name,
@@ -56,7 +60,7 @@ class products(db.Model):
             "cost_price": self.cost_price,
             "sales_price": self.sales_price,
             "description": self.description,
-            "product_image": self.product_image
+            "product_image": image_data
         }
 
 class stock_levels(db.Model):
