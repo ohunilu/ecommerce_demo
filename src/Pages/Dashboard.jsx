@@ -21,6 +21,7 @@ import {
   Cell
 } from "recharts";
 import { useState, useEffect } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 export default function Dashboard() {
   const [data, setData] = useState({
@@ -47,7 +48,13 @@ export default function Dashboard() {
             <Text fontSize="sm">Total Revenue</Text>
           </CardHeader>
           <CardBody>
-            <Text fontSize="4xl" fontWeight="bold">₦ {data.totalRevenue}</Text>
+          <NumericFormat 
+            value={data.totalRevenue} 
+            displayType={'text'} 
+            thousandSeparator={true} 
+            prefix={'₦ '} 
+            renderText={(value) => <Text fontSize="4xl" fontWeight="bold">{value}</Text>} 
+          />
           </CardBody>
         </Card>
         <Card borderTop={"8px"} borderColor={"blue.600"}>
@@ -55,7 +62,13 @@ export default function Dashboard() {
             <Text fontSize="sm">Gross Profit</Text>
           </CardHeader>
           <CardBody>
-            <Text fontSize="4xl" fontWeight="bold">₦ {data.grossProfit}</Text>
+          <NumericFormat 
+            value={data.grossProfit} 
+            displayType={'text'} 
+            thousandSeparator={true} 
+            prefix={'₦ '} 
+            renderText={(value) => <Text fontSize="4xl" fontWeight="bold">{value}</Text>} 
+          />
           </CardBody>
         </Card>
         <Card borderTop={"8px"} borderColor={"blue.600"}>
@@ -63,7 +76,13 @@ export default function Dashboard() {
             <Text fontSize="sm">Average Order Value</Text>
           </CardHeader>
           <CardBody>
-            <Text fontSize="4xl" fontWeight="bold">₦ {data.averageOrderValue}</Text>
+          <NumericFormat 
+            value={data.averageOrderValue} 
+            displayType={'text'} 
+            thousandSeparator={true} 
+            prefix={'₦ '} 
+            renderText={(value) => <Text fontSize="4xl" fontWeight="bold">{value}</Text>} 
+          />
           </CardBody>
         </Card>
       </SimpleGrid>

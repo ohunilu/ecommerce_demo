@@ -2,6 +2,7 @@ import {
   useState,
   useEffect
 } from 'react';
+import { NumericFormat } from 'react-number-format';
 import {
   Card,
   CardBody,
@@ -95,9 +96,13 @@ export default function Product() {
                 <Text>
                   {product.description}
                 </Text>
-                <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                  ₦ {product.sales_price}
-                </Text>
+                <NumericFormat 
+                  value={product.sales_price} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'₦ '} 
+                  renderText={(value) => <Text fontSize="3xl" fontWeight="bold">{value}</Text>} 
+                />
                 </Stack>
               </CardBody>
               <Divider />

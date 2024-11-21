@@ -41,10 +41,10 @@ export default function Order() {
       <Thead>
         <Tr>
           <Th>Order ID</Th>
-          <Th>Email</Th>
+          <Th>Cashier</Th>
           <Th>Order Date</Th>
           <Th>Total Amount</Th>
-          <Th>Username</Th>
+          <Th>Shipping Cost</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -62,10 +62,10 @@ export default function Order() {
           orders.map((order) => (
             <Tr key={order.order_id}>
               <Td>{order.order_id}</Td>
-              <Td>{order.email}</Td>
+              <Td>{order.user?.user_name}</Td>
               <Td>{order.order_date}</Td>
               <Td>{order.total_amount}</Td>
-              <Td>{order.user?.user_name}</Td>
+              <Td>{order.shipping_cost}</Td>
             </Tr>
           ))
         )}

@@ -29,9 +29,33 @@ class AnalyticsService:
 
     def get_gross_profit(self):
         query = """
-            SELECT SUM(od.total_price) - SUM(p.cost_price * od.quantity)
-            FROM order_details od
-            JOIN products p ON od.product_id = p.product_id
+        SELECT 
+        SUM(gross_profit) AS total_gross_profit
+        FROM 
+        (
+            SELECT 
+                p.product_id,
+                p.cost_price,
+                p.sales_price,
+                sq.total_quantity,
+                (p.sales_price * sq.total_quantity) AS total_sales,
+                (p.cost_price * sq.total_quantity) AS total_cost,
+                ((p.sales_price * sq.total_quantity) - (p.cost_price * sq.total_quantity)) AS gross_profit
+            FROM 
+                products p
+            JOIN 
+            (
+                SELECT 
+                    product_id, 
+                    SUM(quantity) AS total_quantity
+                FROM 
+                    order_details
+                GROUP BY 
+                    product_id
+            ) sq
+            ON 
+                p.product_id = sq.product_id
+        ) subquery;
         """
         self.cursor.execute(query)
         result = self.cursor.fetchone()
