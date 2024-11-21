@@ -1,4 +1,4 @@
-# Dockerfile for User Service
+# Dockerfile for Order Service
 
 # Use an official Python image as the base
 FROM python:3.8-slim
